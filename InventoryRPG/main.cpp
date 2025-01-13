@@ -1,8 +1,6 @@
 #include "raylib.h"
-#include "gameManager.h"
 
-#include <vector>
-#include <iostream>
+#include "gameManager.h"
 
 void Load();
 void Update();
