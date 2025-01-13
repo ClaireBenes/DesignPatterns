@@ -8,6 +8,11 @@ void Event::AddObserver(IObserver* observer)
 void Event::RemoveObserver(IObserver* observer)
 {
 	auto it = std::find(observers.begin(), observers.end(), observer);
+	if(it == observers.end())
+	{
+		return;
+	}
+
 	observers.erase(it);
 }
 

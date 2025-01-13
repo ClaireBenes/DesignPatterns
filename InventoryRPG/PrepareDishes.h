@@ -3,17 +3,18 @@
 #include "Dish.h"
 #include "ICommand.h"
 #include "GameManager.h"
+#include "Event.h"
 
 class PrepareDishes : public ICommand
 {
 public:
 	PrepareDishes(Dish* newDish);
-	void Execute() override;
+	bool Execute() override;
+	
+	Event onCooked;
 
-protected:
-	GameManager* gameManager;
-
-private :
+private:
 	Dish* dish;
+	float currentCookingTime = 0.0f;
 };
 

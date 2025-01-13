@@ -1,22 +1,23 @@
 #include "CommandScheduler.h"
 #include "ICommand.h"
 
-CommandScheduler* CommandScheduler::instance = nullptr;
-
-CommandScheduler::CommandScheduler()
-{
-	instance = this;
-}
-
 void CommandScheduler::AddCommandToQueue(ICommand* command)
 {
 	commandQueue.push_back(command);
 }
 
-void CommandScheduler::ExecuteNextCommand()
+void CommandScheduler::ExecuteFirstCommand()
 {
-	printf("%i\n", commandQueue.size());
-	commandQueue.front()->Execute();
+	if(commandQueue.empty())
+	{
+		return;
+	}
+
+	bool isFinished = commandQueue.front()->Execute();
+	if(isFinished)
+	{
+		RemovePreparedCommand();
+	}
 }
 
 void CommandScheduler::RemovePreparedCommand()
@@ -27,9 +28,4 @@ void CommandScheduler::RemovePreparedCommand()
 void CommandScheduler::RemoveLastCommand()
 {
 	commandQueue.erase(commandQueue.begin() + commandQueue.size());
-}
-
-CommandScheduler* CommandScheduler::GetInstance()
-{
-	return instance;
 }

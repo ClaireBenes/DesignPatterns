@@ -2,9 +2,9 @@
 
 #include "CommandScheduler.h"
 
-Dish::Dish(float newTimeToPrepare, int newID)
+Dish::Dish(float newTimeToPrepare, int newID, CommandScheduler* newCommandScheduler)
 {
-	commandScheduler = CommandScheduler::GetInstance();
+	commandScheduler = newCommandScheduler;
 
 	timeToPrepare = newTimeToPrepare;
 	id = newID;
@@ -12,10 +12,5 @@ Dish::Dish(float newTimeToPrepare, int newID)
 
 void Dish::OnNotify()
 {
-	commandScheduler->RemovePreparedCommand();
-
-	if(commandScheduler->commandQueue.size() != 0)
-	{
-		commandScheduler->ExecuteNextCommand();
-	}
+	printf("DISH %i IS FINISHED !!\n", id);
 }

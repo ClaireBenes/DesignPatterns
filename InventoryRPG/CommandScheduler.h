@@ -7,18 +7,11 @@
 class CommandScheduler
 {
 public:
-	CommandScheduler();
-
 	void AddCommandToQueue(ICommand* command);
-	void ExecuteNextCommand();
+	void ExecuteFirstCommand();
 	void RemovePreparedCommand();
 	void RemoveLastCommand();
 
 	std::vector <ICommand*> commandQueue{};
-
-	static CommandScheduler* GetInstance();
-
-private:
-	static CommandScheduler* instance;
 };
 

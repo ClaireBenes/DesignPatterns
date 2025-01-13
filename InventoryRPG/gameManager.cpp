@@ -1,23 +1,16 @@
 #include "GameManager.h"
 
 #include "Event.h"
-#include "Dish.h"
 #include "PrepareDishes.h"
 
 #include "raylib.h"
-
-GameManager* GameManager::instance = nullptr;
-
-GameManager::GameManager()
-{
-	instance = this;
-}
 
 void GameManager::Init()
 {
 	commandScheduler = new CommandScheduler();
 	eventDishReady = new Event();
 	randomTimeBetweenCustomer = rand() % maxTimeBetweenCustomers + minTimeBetweenCustomers;
+
 }
 
 void GameManager::Update()
@@ -33,34 +26,38 @@ void GameManager::Update()
 		randomTimeToPrepare = rand() % maxTimeToPrepare + minTimeToPrepare;
 
 		newDishID++;
-		Dish newDish = Dish(randomTimeToPrepare, newDishID);
-		eventDishReady->AddObserver(&newDish);
-		PrepareDishes newDishesCommand = PrepareDishes(&newDish);
-		commandScheduler->AddCommandToQueue(&newDishesCommand);
+		Dish* newDish = new Dish(randomTimeToPrepare, newDishID, commandScheduler);
+		eventDishReady->AddObserver(newDish);
+		PrepareDishes* newDishesCommand = new PrepareDishes(newDish);
+		newDishesCommand->onCooked.AddObserver(this);
+		commandScheduler->AddCommandToQueue(newDishesCommand);
 
 		printf("NEW CUSTOMER ARRIVED !!\n");
-
-		if(timeToPrepare == 0)
-		{
-			commandScheduler->ExecuteNextCommand();
-		}
 	}
 
+	commandScheduler->ExecuteFirstCommand();
 
 	// Dishes
-	if(timeToPrepare != 0)
+	/*if(actualDish != nullptr && actualDish->timeToPrepare != 0)
 	{
+
+
+		if(!isPreparingDish)
+		{
+			isPreparingDish = true;
+		}
+
 		timeElapsedDishes += GetFrameTime();
 
-		if(timeElapsedDishes >= timeToPrepare)
+		if(timeElapsedDishes >= actualDish->timeToPrepare)
 		{
-			timeElapsedDishes -= timeToPrepare;
+			timeElapsedDishes -= actualDish->timeToPrepare;
 
 			eventDishReady->Notify();
-
-			printf("DISH %i IS FINISHED !!\n", dishID);
+			//eventDishReady->pop;
+			isPreparingDish = false;
 		}
-	}
+	}*/
 }
 
 void GameManager::Draw()
@@ -73,7 +70,8 @@ void GameManager::Unload()
 	
 }
 
-GameManager* GameManager::GetInstance()
+void GameManager::OnNotify()
 {
-	return instance;
+	printf("Some dish has been prepared!\n");
+	printf("Remaining customers: %i\n", (int)(commandScheduler->commandQueue.size() - 1));
 }

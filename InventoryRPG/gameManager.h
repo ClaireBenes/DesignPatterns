@@ -1,31 +1,27 @@
 #pragma once
+#include "Dish.h"
 #include <string>
 #include <vector>
 
 class Event;
 class CommandScheduler;
 
-class GameManager
+class GameManager : public IObserver
 {
 public :
-	GameManager();
-
 	void Init();
 	void Update();
 	void Draw();
 	void Unload();
 
-	static GameManager* GetInstance();
-
-	float timeToPrepare = 0.0f;
-	int dishID = 0;
+	void OnNotify() override;
 
 private:
 
 	const int minTimeToPrepare = 1;
 	const int maxTimeToPrepare = 6;
-	const int minTimeBetweenCustomers = 1;
-	const int maxTimeBetweenCustomers = 3;
+	const int minTimeBetweenCustomers = 2;
+	const int maxTimeBetweenCustomers = 4;
 
 	int randomTimeBetweenCustomer = 2;
 	int randomTimeToPrepare = 2; 
@@ -34,8 +30,9 @@ private:
 	float timeElapsedCustomer = 0.0f;
 	float timeElapsedDishes = 0.0f;
 
+	bool isPreparingDish = false;
+
 	Event* eventDishReady = nullptr;
 	CommandScheduler* commandScheduler = nullptr;
-	static GameManager* instance;
 };
 
