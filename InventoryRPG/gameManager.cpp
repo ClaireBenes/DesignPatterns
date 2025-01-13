@@ -8,7 +8,6 @@
 void GameManager::Init()
 {
 	commandScheduler = new CommandScheduler();
-	eventDishReady = new Event();
 	randomTimeBetweenCustomer = rand() % maxTimeBetweenCustomers + minTimeBetweenCustomers;
 
 }
@@ -26,8 +25,7 @@ void GameManager::Update()
 		randomTimeToPrepare = rand() % maxTimeToPrepare + minTimeToPrepare;
 
 		newDishID++;
-		Dish* newDish = new Dish(randomTimeToPrepare, newDishID, commandScheduler);
-		eventDishReady->AddObserver(newDish);
+		Dish* newDish = new Dish(randomTimeToPrepare, newDishID);
 		PrepareDishes* newDishesCommand = new PrepareDishes(newDish);
 		newDishesCommand->onCooked.AddObserver(this);
 		commandScheduler->AddCommandToQueue(newDishesCommand);
@@ -35,29 +33,8 @@ void GameManager::Update()
 		printf("NEW CUSTOMER ARRIVED !!\n");
 	}
 
+	//Cooking
 	commandScheduler->ExecuteFirstCommand();
-
-	// Dishes
-	/*if(actualDish != nullptr && actualDish->timeToPrepare != 0)
-	{
-
-
-		if(!isPreparingDish)
-		{
-			isPreparingDish = true;
-		}
-
-		timeElapsedDishes += GetFrameTime();
-
-		if(timeElapsedDishes >= actualDish->timeToPrepare)
-		{
-			timeElapsedDishes -= actualDish->timeToPrepare;
-
-			eventDishReady->Notify();
-			//eventDishReady->pop;
-			isPreparingDish = false;
-		}
-	}*/
 }
 
 void GameManager::Draw()

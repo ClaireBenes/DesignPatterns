@@ -2,10 +2,8 @@
 
 #include "CommandScheduler.h"
 
-Dish::Dish(float newTimeToPrepare, int newID, CommandScheduler* newCommandScheduler)
+Dish::Dish(float newTimeToPrepare, int newID)
 {
-	commandScheduler = newCommandScheduler;
-
 	timeToPrepare = newTimeToPrepare;
 	id = newID;
 }

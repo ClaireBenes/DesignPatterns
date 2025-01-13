@@ -28,11 +28,7 @@ private:
 	int newDishID = 0;
 	
 	float timeElapsedCustomer = 0.0f;
-	float timeElapsedDishes = 0.0f;
 
-	bool isPreparingDish = false;
-
-	Event* eventDishReady = nullptr;
 	CommandScheduler* commandScheduler = nullptr;
 };
 

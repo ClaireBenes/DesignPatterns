@@ -6,7 +6,7 @@
 class Dish : public IObserver
 {
 public:
-	Dish(float newTimeToPrepare, int newId, CommandScheduler* newCommandScheduler);
+	Dish(float newTimeToPrepare, int newId);
 
 	void OnNotify() override;
 	
