@@ -1,6 +1,8 @@
 #include "CommandScheduler.h"
 #include "ICommand.h"
 
+CommandScheduler* CommandScheduler::instance = nullptr;
+
 CommandScheduler::CommandScheduler()
 {
 	instance = this;
@@ -13,6 +15,7 @@ void CommandScheduler::AddCommandToQueue(ICommand* command)
 
 void CommandScheduler::ExecuteNextCommand()
 {
+	printf("%i\n", commandQueue.size());
 	commandQueue.front()->Execute();
 }
 

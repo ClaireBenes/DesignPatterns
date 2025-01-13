@@ -2,7 +2,7 @@
 
 #include "vector"
 
-class ICommand;
+#include "ICommand.h"
 
 class CommandScheduler
 {
@@ -14,7 +14,8 @@ public:
 	void RemovePreparedCommand();
 	void RemoveLastCommand();
 
-	static std::vector <ICommand*> commandQueue;
+	std::vector <ICommand*> commandQueue{};
+
 	static CommandScheduler* GetInstance();
 
 private:

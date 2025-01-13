@@ -131,11 +131,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="gameManager.cpp" />
+    <ClCompile Include="CommandScheduler.cpp" />
+    <ClCompile Include="Dish.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PrepareDishes.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameManager.h" />
+    <ClInclude Include="CommandScheduler.h" />
+    <ClInclude Include="Dish.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="ICommand.h" />
+    <ClInclude Include="IObserver.h" />
+    <ClInclude Include="PrepareDishes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

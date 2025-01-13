@@ -2,15 +2,14 @@
 
 #include "raylib.h"
 
+PrepareDishes::PrepareDishes(Dish* newDish)
+{
+	gameManager = GameManager::GetInstance();
+	dish = newDish;
+}
+
 void PrepareDishes::Execute()
 {
-	static float timeElapsed = 0.0f;
-	timeElapsed += GetFrameTime();
-	if(timeElapsed >= timeToPrepare)
-	{
-		timeElapsed -= mTimeOfCountdown;
-		mCountdown--;
-	}
-
-	return ( mCountdown == 0 );
+	gameManager->timeToPrepare = dish->timeToPrepare;
+	gameManager->dishID = dish->id;
 }

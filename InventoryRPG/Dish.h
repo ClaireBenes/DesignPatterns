@@ -3,12 +3,15 @@
 #include "IObserver.h"
 #include "CommandScheduler.h"
 
-class DishReadyObserver : public IObserver
+class Dish : public IObserver
 {
 public:
-	DishReadyObserver();
+	Dish(float newTimeToPrepare, int newId);
 
 	void OnNotify() override;
+	
+	float timeToPrepare;
+	int id;
 
 protected:
 	CommandScheduler* commandScheduler;
