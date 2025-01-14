@@ -12,14 +12,7 @@ void GameManager::Init()
 	commandScheduler = new CommandScheduler();
 	randomTimeBetweenCustomer = rand() % maxTimeBetweenCustomers + minTimeBetweenCustomers;
 
-	auto firstCustomerData = std::make_shared<CustomerData>();
-	firstCustomerData->size = 5;
-	//allCustomers.push_back(firstCustomerData);
-
-	auto firstCustomer = std::make_shared<Customer>();
-	firstCustomer->ChangeCustomerData(firstCustomerData);
-
-	AddObject(firstCustomer);
+	//NewCustomer();
 }
 
 void GameManager::Update()
@@ -35,13 +28,26 @@ void GameManager::Update()
 		object->Update();
 	}
 
+	for(auto& object : objectsToRemove)
+	{
+		auto objectToKill = std::find(allObjects.begin(), allObjects.end(), object);
+		if(objectToKill == allObjects.end())
+		{
+			continue;
+		}
+
+		allObjects.erase(objectToKill);
+	}
+
+	objectsToRemove.clear();
+
 	//Customer
 	timeElapsedCustomer += GetFrameTime();
 
 	//Customer coming in every 1 to 4 secs.
 	if(timeElapsedCustomer >= randomTimeBetweenCustomer)
 	{
-		timeElapsedCustomer -= randomTimeBetweenCustomer;
+		timeElapsedCustomer -= 500.0f;//randomTimeBetweenCustomer;
 
 		randomTimeBetweenCustomer = rand() % maxTimeBetweenCustomers + minTimeBetweenCustomers;
 		randomTimeToPrepare = rand() % maxTimeToPrepare + minTimeToPrepare;
@@ -76,8 +82,14 @@ void GameManager::NewCustomer()
 {
 	printf("NEW CUSTOMER ARRIVED !!\n");
 
+	auto customerData = std::make_shared<CustomerData>();
+	customerData->waitingPos += customerData->customerImages.width * 3 * allCustomers.size();
+
 	auto customer = std::make_shared<Customer>();
-	//AddObject(customer);
+	customer->ChangeCustomerData(customerData);
+
+	allCustomers.push_back(customer);
+	AddObject(customer);
 }
 
 void GameManager::AddObject(std::shared_ptr<GameObject> object)
@@ -85,8 +97,25 @@ void GameManager::AddObject(std::shared_ptr<GameObject> object)
 	objectsToAdd.push_back(object);
 }
 
+void GameManager::EraseObject(std::shared_ptr<GameObject> object)
+{
+	objectsToRemove.push_back(object);
+}
+
 void GameManager::OnNotify()
 {
 	printf("Some dish has been prepared!\n");
 	printf("Remaining customers: %i\n", (int)(commandScheduler->commandQueue.size() - 1));
+
+	auto customerData = std::make_shared<CustomerData>();
+	customerData->speed = 200;
+	customerData->waitingPos = -200;
+
+	//allCustomers[0]->ChangeCustomerData(customerData);
+	allCustomers.erase(allCustomers.begin());
+
+	/*for(auto& customer : allCustomers)
+	{
+		customer->customerData->waitingPos += customer->customerData->customerImages.width * 3;
+	}*/
 }

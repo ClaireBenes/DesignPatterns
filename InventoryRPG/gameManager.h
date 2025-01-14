@@ -1,7 +1,7 @@
 #pragma once
 #include "Event.h"
 #include "GameObject.h"
-#include "CustomerData.h"
+#include "Customer.h"
 
 #include <string>
 #include <vector>
@@ -19,6 +19,7 @@ public :
 
 	void NewCustomer();
 	void AddObject(std::shared_ptr<GameObject> object);
+	void EraseObject(std::shared_ptr<GameObject> object);
 
 	void OnNotify() override;
 
@@ -35,11 +36,11 @@ private:
 	
 	float timeElapsedCustomer = 0.0f;
 
-	//std::vector<std::shared_ptr<CustomerData>> allCustomers;
+	std::vector<std::shared_ptr<Customer>> allCustomers;
 
-	//maybe will have to do a "to remove" ?
 	std::vector<std::shared_ptr<GameObject>> objectsToAdd;
 	std::vector<std::shared_ptr<GameObject>> allObjects;
+	std::vector<std::shared_ptr<GameObject>> objectsToRemove;
 
 	CommandScheduler* commandScheduler = nullptr;
 };
