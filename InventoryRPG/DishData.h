@@ -20,7 +20,5 @@ struct DishData
 		LoadTexture("ressource/Food/91_strawberrycake_dish.png")
 	};
 
-	Texture2D foodImage = allFoodImages[0];
-
-	float size = 5;
+	float size = 3;
 };

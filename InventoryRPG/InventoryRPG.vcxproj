@@ -131,10 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="CommandScheduler.cpp" />
     <ClCompile Include="Customer.cpp" />
-    <ClCompile Include="CustomerData.cpp" />
     <ClCompile Include="Dish.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -143,11 +141,11 @@
     <ClCompile Include="PrepareDishes.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AssetManager.h" />
     <ClInclude Include="CommandScheduler.h" />
     <ClInclude Include="Customer.h" />
     <ClInclude Include="CustomerData.h" />
     <ClInclude Include="Dish.h" />
+    <ClInclude Include="DishData.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />

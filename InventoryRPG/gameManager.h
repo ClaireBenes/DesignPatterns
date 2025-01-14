@@ -2,6 +2,7 @@
 #include "Event.h"
 #include "GameObject.h"
 #include "Customer.h"
+#include "DishData.h"
 
 #include <string>
 #include <vector>
@@ -18,6 +19,7 @@ public :
 	void Unload();
 
 	void NewCustomer();
+	void NewDish();
 	void AddObject(std::shared_ptr<GameObject> object);
 	void EraseObject(std::shared_ptr<GameObject> object);
 
@@ -38,13 +40,13 @@ private:
 
 	std::shared_ptr<CustomerData> waitingCustomerData;
 	std::shared_ptr<CustomerData> runningCustomerData;
+	std::shared_ptr<DishData> foodData;
 
 	std::vector<std::shared_ptr<Customer>> allCustomers;
 	std::vector<std::shared_ptr<GameObject>> objectsToAdd;
 	std::vector<std::shared_ptr<GameObject>> allObjects;
 	std::vector<std::shared_ptr<GameObject>> objectsToRemove;
 
-	//CommandScheduler* commandScheduler = nullptr;
 	std::shared_ptr<CommandScheduler> commandScheduler;
 };
 

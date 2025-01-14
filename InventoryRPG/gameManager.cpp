@@ -16,6 +16,8 @@ void GameManager::Init()
 	waitingCustomerData->speed = 200;
 	runningCustomerData = std::make_shared<CustomerData>();
 	runningCustomerData->speed = 400;
+
+	foodData = std::make_shared<DishData>();
 }
 
 void GameManager::Update()
@@ -57,12 +59,7 @@ void GameManager::Update()
 		randomTimeToPrepare = rand() % maxTimeToPrepare + minTimeToPrepare;
 
 		NewCustomer();
-
-		newDishID++;
-		std::shared_ptr<Dish> newDish = std::make_shared<Dish>(randomTimeToPrepare, newDishID);
-		std::shared_ptr<PrepareDishes> newDishesCommand = std::make_shared<PrepareDishes>(newDish);
-		newDishesCommand->onCooked.AddObserver(shared_from_this());
-		commandScheduler->AddCommandToQueue(newDishesCommand);
+		NewDish();
 	}
 
 	//Cooking
@@ -94,6 +91,22 @@ void GameManager::NewCustomer()
 
 	allCustomers.push_back(customer);
 	AddObject(customer);
+}
+
+void GameManager::NewDish()
+{
+	newDishID++;
+
+	std::shared_ptr<Dish> newDish = std::make_shared<Dish>(randomTimeToPrepare, newDishID);
+	newDish->ChangeDishData(foodData);
+	newDish->Init();
+
+	AddObject(newDish);
+
+	std::shared_ptr<PrepareDishes> newDishesCommand = std::make_shared<PrepareDishes>(newDish);
+	newDishesCommand->onCooked.AddObserver(shared_from_this());
+
+	commandScheduler->AddCommandToQueue(newDishesCommand);
 }
 
 void GameManager::AddObject(std::shared_ptr<GameObject> object)

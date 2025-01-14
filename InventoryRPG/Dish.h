@@ -1,5 +1,7 @@
 #pragma once
 
+#include "raylib.h"
+
 #include "IObserver.h"
 #include "DishData.h"
 #include "GameObject.h"
@@ -22,5 +24,8 @@ public:
 
 	float timeToPrepare;
 	int id;
+
+private:
+	Texture2D foodImage = LoadTexture("ressource/Food/91_strawberrycake_dish.png");
 };
 
