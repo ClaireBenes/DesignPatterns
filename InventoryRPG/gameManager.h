@@ -1,9 +1,12 @@
 #pragma once
-#include "Dish.h"
+#include "Event.h"
+#include "GameObject.h"
+#include "CustomerData.h"
+
 #include <string>
 #include <vector>
+#include <memory>
 
-class Event;
 class CommandScheduler;
 
 class GameManager : public IObserver
@@ -28,6 +31,11 @@ private:
 	int newDishID = 0;
 	
 	float timeElapsedCustomer = 0.0f;
+
+	std::vector<std::shared_ptr<CustomerData>> allCustomers;
+
+	//maybe will have to do a "to add object" and "to remove" ?
+	std::vector<std::shared_ptr<GameObject>> allGameObjects;
 
 	CommandScheduler* commandScheduler = nullptr;
 };

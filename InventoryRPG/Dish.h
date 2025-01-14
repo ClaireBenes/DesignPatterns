@@ -1,7 +1,6 @@
 #pragma once
 
 #include "IObserver.h"
-#include "CommandScheduler.h"
 
 class Dish : public IObserver
 {
@@ -12,8 +11,5 @@ public:
 	
 	float timeToPrepare;
 	int id;
-
-protected:
-	CommandScheduler* commandScheduler;
 };
 

@@ -2,6 +2,7 @@
 
 #include "Event.h"
 #include "PrepareDishes.h"
+#include "CommandScheduler.h"
 
 #include "raylib.h"
 
@@ -10,13 +11,16 @@ void GameManager::Init()
 	commandScheduler = new CommandScheduler();
 	randomTimeBetweenCustomer = rand() % maxTimeBetweenCustomers + minTimeBetweenCustomers;
 
+	auto firstCustomer = std::make_shared<CustomerData>();
+	allCustomers.push_back(firstCustomer);
 }
 
 void GameManager::Update()
 {
-	// Customer
+	//Customer
 	timeElapsedCustomer += GetFrameTime();
 
+	//Customer coming in every 1 to 4 secs.
 	if(timeElapsedCustomer >= randomTimeBetweenCustomer)
 	{
 		timeElapsedCustomer -= randomTimeBetweenCustomer;
@@ -24,13 +28,13 @@ void GameManager::Update()
 		randomTimeBetweenCustomer = rand() % maxTimeBetweenCustomers + minTimeBetweenCustomers;
 		randomTimeToPrepare = rand() % maxTimeToPrepare + minTimeToPrepare;
 
+		printf("NEW CUSTOMER ARRIVED !!\n");
+
 		newDishID++;
 		Dish* newDish = new Dish(randomTimeToPrepare, newDishID);
 		PrepareDishes* newDishesCommand = new PrepareDishes(newDish);
 		newDishesCommand->onCooked.AddObserver(this);
 		commandScheduler->AddCommandToQueue(newDishesCommand);
-
-		printf("NEW CUSTOMER ARRIVED !!\n");
 	}
 
 	//Cooking
