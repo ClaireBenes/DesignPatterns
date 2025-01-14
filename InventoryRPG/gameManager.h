@@ -25,6 +25,8 @@ public :
 
 	void OnNotify() override;
 
+	std::vector<std::shared_ptr<Dish>> allDishes;
+
 private:
 
 	const int minTimeToPrepare = 1;
@@ -44,7 +46,6 @@ private:
 	std::shared_ptr<DishData> dishData;
 
 	std::vector<std::shared_ptr<Customer>> allCustomers;
-	std::vector<std::shared_ptr<Dish>> allDishs;
 
 	std::vector<std::shared_ptr<GameObject>> objectsToAdd;
 	std::vector<std::shared_ptr<GameObject>> allObjects;

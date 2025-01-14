@@ -50,6 +50,7 @@ void GameManager::Update()
 		}
 
 		allObjects.erase(objectToKill);
+		//******************************************** Find a way to unload texture of object if they have one
 	}
 
 	//Clear both object to add and remove
@@ -119,8 +120,40 @@ void GameManager::NewDish()
 	newDish->ChangeDishData(dishData);
 	newDish->Init();
 
+	//**Need to refactor (sometimes go on top of an other dishes)
+	// (do an array with already a certain number of element being nullptr, if null -> put dishes,
+	// when removing just make it nullptr - then check index to multiply to get right pos)
+	//Place food in order and check if there is already food there or not
+	float tempPos = 200;
+	for(int i = 0; i < allDishes.size(); i++)
+	{
+		auto& dish = allDishes[i];
+		if(!allDishes.empty() && CheckCollisionRecs(
+			{
+				tempPos,
+				newDish->posY,
+				( float ) newDish->GetFoodImage().width* dish->dishData->size,
+				( float ) newDish->GetFoodImage().height* dish->dishData->size
+			},
+			{
+				dish->posX,
+				dish->posY,
+				( float ) dish->GetFoodImage().width * dish->dishData->size,
+				( float ) dish->GetFoodImage().height * dish->dishData->size
+			}))
+		{
+			tempPos += newDish->GetFoodImage().width * dish->dishData->size;
+		}
+		else
+		{
+			break;
+		}
+	}
+	newDish->posX = tempPos;
+	//**
+
 	AddObject(newDish);
-	allDishs.push_back(newDish);
+	allDishes.push_back(newDish);
 
 	//Add the dish to prepareDishes to start cooking it
 	std::shared_ptr<PrepareDishes> newDishesCommand = std::make_shared<PrepareDishes>(newDish);
@@ -152,7 +185,9 @@ void GameManager::OnNotify()
 	allCustomers[0]->willBeDestroyed = true;
 	allCustomers[0]->waitingPos = -200;
 	allCustomers[0]->ChangeCustomerData(runningCustomerData);
-	allCustomers.erase(allCustomers.begin());
+
+	//Erase first element of customers
+	allCustomers.erase(allCustomers.begin());;
 
 	//Move all other customers still waiting to the next available spot
 	for(int i = 0; i < allCustomers.size(); i++)

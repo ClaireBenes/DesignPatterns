@@ -17,6 +17,7 @@ public:
 
 	void OnNotify() override;
 	
+	Texture2D GetFoodImage();
 	void ChangeDishData(std::shared_ptr<DishData> newData);
 
 public:
