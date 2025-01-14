@@ -17,6 +17,9 @@ public :
 	void Draw();
 	void Unload();
 
+	void NewCustomer();
+	void AddObject(std::shared_ptr<GameObject> object);
+
 	void OnNotify() override;
 
 private:
@@ -32,10 +35,11 @@ private:
 	
 	float timeElapsedCustomer = 0.0f;
 
-	std::vector<std::shared_ptr<CustomerData>> allCustomers;
+	//std::vector<std::shared_ptr<CustomerData>> allCustomers;
 
-	//maybe will have to do a "to add object" and "to remove" ?
-	std::vector<std::shared_ptr<GameObject>> allGameObjects;
+	//maybe will have to do a "to remove" ?
+	std::vector<std::shared_ptr<GameObject>> objectsToAdd;
+	std::vector<std::shared_ptr<GameObject>> allObjects;
 
 	CommandScheduler* commandScheduler = nullptr;
 };

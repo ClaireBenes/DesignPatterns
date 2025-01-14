@@ -10,6 +10,7 @@
 class Customer : public GameObject
 {
 public:
+	void Init() override;
 	void Update() override;
 	void Draw() override;
 

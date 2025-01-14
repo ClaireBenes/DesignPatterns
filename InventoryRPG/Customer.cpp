@@ -1,14 +1,19 @@
 #include "Customer.h"
 
+void Customer::Init()
+{
+	posX = GetScreenWidth();
+	posY = 250;
+}
+
 void Customer::Update()
 {
-	//posX += customerData->speed
+	posX -= customerData->speed;
+
 }
 
 void Customer::Draw()
 {
-	posX = 50;
-	posY = 50;
 	DrawTextureEx(customerData->customerImages, { posX,posY }, 0, customerData->size, WHITE);
 }
 
