@@ -10,10 +10,12 @@ void Customer::Init()
 
 void Customer::Update()
 {
+	//Go to a certain pos
 	if(posX > waitingPos)
 	{
 		posX -= customerData->speed * GetFrameTime();
 	}
+	//Will be destroyed if at a certain pos and ready to be destroyed
 	else if(willBeDestroyed)
 	{
 		gameManager->EraseObject(shared_from_this());

@@ -2,7 +2,7 @@
 #include "Event.h"
 #include "GameObject.h"
 #include "Customer.h"
-#include "DishData.h"
+#include "Dish.h"
 
 #include <string>
 #include <vector>
@@ -38,11 +38,14 @@ private:
 	
 	float timeElapsedCustomer = 0.0f;
 
+	//using smart (shared) pointer to automatically deallocate the objects when they are not referenced anymore
 	std::shared_ptr<CustomerData> waitingCustomerData;
 	std::shared_ptr<CustomerData> runningCustomerData;
-	std::shared_ptr<DishData> foodData;
+	std::shared_ptr<DishData> dishData;
 
 	std::vector<std::shared_ptr<Customer>> allCustomers;
+	std::vector<std::shared_ptr<Dish>> allDishs;
+
 	std::vector<std::shared_ptr<GameObject>> objectsToAdd;
 	std::vector<std::shared_ptr<GameObject>> allObjects;
 	std::vector<std::shared_ptr<GameObject>> objectsToRemove;

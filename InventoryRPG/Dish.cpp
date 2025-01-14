@@ -11,6 +11,7 @@ Dish::Dish(float newTimeToPrepare, int newID)
 
 void Dish::Init()
 {
+	//Choose new random image
 	float randomImages = rand() % dishData->allFoodImages.size();
 	foodImage = dishData->allFoodImages[randomImages];
 }
@@ -28,6 +29,7 @@ void Dish::Draw()
 
 void Dish::OnNotify()
 {
+	//Erase object when dish is finished
 	printf("DISH %i IS FINISHED !!\n", id);
 	gameManager->EraseObject(shared_from_this());
 }
