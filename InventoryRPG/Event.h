@@ -1,16 +1,17 @@
 #pragma once
 
 #include "IObserver.h"
-#include "vector"
 
+#include <vector>
+#include <memory>
 
 class Event
 {
 public:
-	std::vector<IObserver*> observers;
+	std::vector<std::shared_ptr<IObserver>> observers;
 
-	void AddObserver(IObserver* observer);
-	void RemoveObserver(IObserver* observer);
+	void AddObserver(std::shared_ptr<IObserver> observer);
+	void RemoveObserver(std::shared_ptr<IObserver> observer);
 	void Notify();
 };
 

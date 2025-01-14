@@ -9,7 +9,7 @@
 
 class CommandScheduler;
 
-class GameManager : public IObserver
+class GameManager : public IObserver, public std::enable_shared_from_this<GameManager>
 {
 public :
 	void Init();
@@ -44,6 +44,7 @@ private:
 	std::vector<std::shared_ptr<GameObject>> allObjects;
 	std::vector<std::shared_ptr<GameObject>> objectsToRemove;
 
-	CommandScheduler* commandScheduler = nullptr;
+	//CommandScheduler* commandScheduler = nullptr;
+	std::shared_ptr<CommandScheduler> commandScheduler;
 };
 

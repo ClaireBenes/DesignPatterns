@@ -8,13 +8,13 @@
 class PrepareDishes : public ICommand
 {
 public:
-	PrepareDishes(Dish* newDish);
+	PrepareDishes(std::shared_ptr<Dish> newDish);
 	bool Execute() override;
 	
 	Event onCooked;
 
 private:
-	Dish* dish;
+	std::shared_ptr<Dish> dish;
 	float currentCookingTime = 0.0f;
 };
 

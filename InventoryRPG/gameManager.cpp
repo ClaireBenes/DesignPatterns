@@ -9,7 +9,7 @@
 
 void GameManager::Init()
 {
-	commandScheduler = new CommandScheduler();
+	commandScheduler = std::make_shared<CommandScheduler>();
 	randomTimeBetweenCustomer = rand() % maxTimeBetweenCustomers + minTimeBetweenCustomers;
 
 	waitingCustomerData = std::make_shared<CustomerData>();
@@ -59,9 +59,9 @@ void GameManager::Update()
 		NewCustomer();
 
 		newDishID++;
-		Dish* newDish = new Dish(randomTimeToPrepare, newDishID);
-		PrepareDishes* newDishesCommand = new PrepareDishes(newDish);
-		newDishesCommand->onCooked.AddObserver(this);
+		std::shared_ptr<Dish> newDish = std::make_shared<Dish>(randomTimeToPrepare, newDishID);
+		std::shared_ptr<PrepareDishes> newDishesCommand = std::make_shared<PrepareDishes>(newDish);
+		newDishesCommand->onCooked.AddObserver(shared_from_this());
 		commandScheduler->AddCommandToQueue(newDishesCommand);
 	}
 

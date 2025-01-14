@@ -1,7 +1,7 @@
 #include "CommandScheduler.h"
 #include "ICommand.h"
 
-void CommandScheduler::AddCommandToQueue(ICommand* command)
+void CommandScheduler::AddCommandToQueue(std::shared_ptr<ICommand> command)
 {
 	commandQueue.push_back(command);
 }

@@ -7,7 +7,7 @@ void Update();
 void Draw();
 void Unload();
 
-GameManager gameManager;
+std::shared_ptr<GameManager> gameManager = std::make_shared<GameManager>();
 
 int main()
 {
@@ -28,12 +28,12 @@ void Load()
 	InitWindow(1080, 720, "DesignPatterns");
 	SetTargetFPS(60);
 
-	gameManager.Init();
+	gameManager->Init();
 }
 
 void Update()
 {
-	gameManager.Update();
+	gameManager->Update();
 }
 
 void Draw()
@@ -41,14 +41,14 @@ void Draw()
 	BeginDrawing();
 
 	ClearBackground(BEIGE);
-	gameManager.Draw();
+	gameManager->Draw();
 
 	EndDrawing();
 }
 
 void Unload()
 {
-	gameManager.Unload();
+	gameManager->Unload();
 
 	CloseWindow();
 }

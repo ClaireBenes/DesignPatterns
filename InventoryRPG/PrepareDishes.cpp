@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 
-PrepareDishes::PrepareDishes(Dish* newDish)
+PrepareDishes::PrepareDishes(std::shared_ptr<Dish> newDish)
 {
 	dish = newDish;
 	currentCookingTime = dish->timeToPrepare;
