@@ -5,6 +5,8 @@
 #include <memory>
 #include <cmath>
 
+class GameManager;
+
 class GameObject : public std::enable_shared_from_this<GameObject>
 {
 public:
@@ -14,5 +16,7 @@ public:
 
 	float posX, posY;
 	float size;
+
+	GameManager* gameManager;
 };
 

@@ -1,5 +1,6 @@
 #include "Customer.h"
-#include "raylib.h"
+
+#include "GameManager.h"
 
 void Customer::Init()
 {
@@ -9,17 +10,19 @@ void Customer::Init()
 
 void Customer::Update()
 {
-	if(posX > customerData->waitingPos)
+	if(posX > waitingPos)
 	{
 		posX -= customerData->speed * GetFrameTime();
+	}
+	else if(willBeDestroyed)
+	{
+		gameManager->EraseObject(shared_from_this());
 	}
 }
 
 void Customer::Draw()
 {
 	DrawTextureEx(customerData->customerImages, { posX,posY }, 0, customerData->size, WHITE);
-
-	DrawLine(posX, posY, customerData->waitingPos, posY, RED);
 }
 
 void Customer::ChangeCustomerData(std::shared_ptr<CustomerData> newData)

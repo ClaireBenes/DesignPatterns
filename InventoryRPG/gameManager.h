@@ -36,8 +36,10 @@ private:
 	
 	float timeElapsedCustomer = 0.0f;
 
-	std::vector<std::shared_ptr<Customer>> allCustomers;
+	std::shared_ptr<CustomerData> waitingCustomerData;
+	std::shared_ptr<CustomerData> runningCustomerData;
 
+	std::vector<std::shared_ptr<Customer>> allCustomers;
 	std::vector<std::shared_ptr<GameObject>> objectsToAdd;
 	std::vector<std::shared_ptr<GameObject>> allObjects;
 	std::vector<std::shared_ptr<GameObject>> objectsToRemove;

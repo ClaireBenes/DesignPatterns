@@ -12,7 +12,10 @@ void GameManager::Init()
 	commandScheduler = new CommandScheduler();
 	randomTimeBetweenCustomer = rand() % maxTimeBetweenCustomers + minTimeBetweenCustomers;
 
-	//NewCustomer();
+	waitingCustomerData = std::make_shared<CustomerData>();
+	waitingCustomerData->speed = 200;
+	runningCustomerData = std::make_shared<CustomerData>();
+	runningCustomerData->speed = 400;
 }
 
 void GameManager::Update()
@@ -39,6 +42,7 @@ void GameManager::Update()
 		allObjects.erase(objectToKill);
 	}
 
+	objectsToAdd.clear();
 	objectsToRemove.clear();
 
 	//Customer
@@ -47,7 +51,7 @@ void GameManager::Update()
 	//Customer coming in every 1 to 4 secs.
 	if(timeElapsedCustomer >= randomTimeBetweenCustomer)
 	{
-		timeElapsedCustomer -= 500.0f;//randomTimeBetweenCustomer;
+		timeElapsedCustomer -= randomTimeBetweenCustomer;
 
 		randomTimeBetweenCustomer = rand() % maxTimeBetweenCustomers + minTimeBetweenCustomers;
 		randomTimeToPrepare = rand() % maxTimeToPrepare + minTimeToPrepare;
@@ -71,6 +75,8 @@ void GameManager::Draw()
 	{
 		object->Draw();
 	}
+
+	DrawText(TextFormat("GameObjects : %i", allObjects.size()), 20, 20, 20, RED);
 }
 
 void GameManager::Unload()
@@ -82,11 +88,9 @@ void GameManager::NewCustomer()
 {
 	printf("NEW CUSTOMER ARRIVED !!\n");
 
-	auto customerData = std::make_shared<CustomerData>();
-	customerData->waitingPos += customerData->customerImages.width * 3 * allCustomers.size();
-
 	auto customer = std::make_shared<Customer>();
-	customer->ChangeCustomerData(customerData);
+	customer->waitingPos += waitingCustomerData->customerImages.width * 3 * allCustomers.size();
+	customer->ChangeCustomerData(waitingCustomerData);
 
 	allCustomers.push_back(customer);
 	AddObject(customer);
@@ -94,6 +98,7 @@ void GameManager::NewCustomer()
 
 void GameManager::AddObject(std::shared_ptr<GameObject> object)
 {
+	object->gameManager = this;
 	objectsToAdd.push_back(object);
 }
 
@@ -107,15 +112,13 @@ void GameManager::OnNotify()
 	printf("Some dish has been prepared!\n");
 	printf("Remaining customers: %i\n", (int)(commandScheduler->commandQueue.size() - 1));
 
-	auto customerData = std::make_shared<CustomerData>();
-	customerData->speed = 200;
-	customerData->waitingPos = -200;
-
-	//allCustomers[0]->ChangeCustomerData(customerData);
+	allCustomers[0]->willBeDestroyed = true;
+	allCustomers[0]->waitingPos = -200;
+	allCustomers[0]->ChangeCustomerData(runningCustomerData);
 	allCustomers.erase(allCustomers.begin());
 
-	/*for(auto& customer : allCustomers)
+	for(int i = 0; i < allCustomers.size(); i++)
 	{
-		customer->customerData->waitingPos += customer->customerData->customerImages.width * 3;
-	}*/
+		allCustomers[i]->waitingPos = 200 + allCustomers[i]->customerData->customerImages.width * 3 * i;
+	}
 }

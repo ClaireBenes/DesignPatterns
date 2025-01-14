@@ -17,5 +17,8 @@ public:
 	void ChangeCustomerData(std::shared_ptr<CustomerData> newData);
 
 	std::shared_ptr<CustomerData> customerData;
+
+	float waitingPos = 200;
+	bool willBeDestroyed = false;
 };
 
