@@ -31,6 +31,7 @@ void Dish::OnNotify()
 {
 	//Erase object when dish is finished
 	printf("DISH %i IS FINISHED !!\n", id);
+	UnloadTexture(foodImage);
 	gameManager->EraseObject(shared_from_this());
 }
 
