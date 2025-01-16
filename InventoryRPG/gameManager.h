@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <array>
 
 class CommandScheduler;
 
@@ -25,7 +26,7 @@ public :
 
 	void OnNotify() override;
 
-	std::vector<std::shared_ptr<Dish>> allDishes;
+	std::array<std::shared_ptr<Dish>, 15> allDishes {};
 
 private:
 

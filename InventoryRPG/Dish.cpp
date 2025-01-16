@@ -31,7 +31,16 @@ void Dish::OnNotify()
 	//Erase object when dish is finished
 	printf("DISH %i IS FINISHED !!\n", id);
 
-	gameManager->allDishes.erase(gameManager->allDishes.begin());
+	//Find location of the dish in allDishes array -> replace it with nullptr
+	auto& allDishes = gameManager->allDishes;
+	auto it = std::find(allDishes.begin(), allDishes.end(), shared_from_this());
+	if (it == allDishes.end())
+	{
+		return;
+	}
+
+	*it = nullptr;
+
 	gameManager->EraseObject(shared_from_this());
 }
 

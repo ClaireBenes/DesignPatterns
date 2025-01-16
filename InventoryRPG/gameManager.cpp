@@ -9,6 +9,9 @@
 
 void GameManager::Init()
 {
+	//Initialize dish array to nullptr for every index
+	allDishes.fill(nullptr);
+
 	//Create a CommandScheduler
 	commandScheduler = std::make_shared<CommandScheduler>();
 
@@ -120,40 +123,19 @@ void GameManager::NewDish()
 	newDish->ChangeDishData(dishData);
 	newDish->Init();
 
-	//**Need to refactor (sometimes go on top of an other dishes)
-	// (do an array with already a certain number of element being nullptr, if null -> put dishes,
-	// when removing just make it nullptr - then check index to multiply to get right pos)
-	//Place food in order and check if there is already food there or not
-	float tempPos = 200;
-	for(int i = 0; i < allDishes.size(); i++)
+	//Place dishes at right location
+	for (int i = 0; i < allDishes.size(); i++)
 	{
 		auto& dish = allDishes[i];
-		if(!allDishes.empty() && CheckCollisionRecs(
-			{
-				tempPos,
-				newDish->posY,
-				( float ) newDish->GetFoodImage().width* dish->dishData->size,
-				( float ) newDish->GetFoodImage().height* dish->dishData->size
-			},
-			{
-				dish->posX,
-				dish->posY,
-				( float ) dish->GetFoodImage().width * dish->dishData->size,
-				( float ) dish->GetFoodImage().height * dish->dishData->size
-			}))
+		if (dish == nullptr)
 		{
-			tempPos += newDish->GetFoodImage().width * dish->dishData->size;
-		}
-		else
-		{
+			dish = newDish;
+			newDish->posX = 200 + dish->GetFoodImage().width * dish->dishData->size * i;
 			break;
 		}
 	}
-	newDish->posX = tempPos;
-	//**
 
 	AddObject(newDish);
-	allDishes.push_back(newDish);
 
 	//Add the dish to prepareDishes to start cooking it
 	std::shared_ptr<PrepareDishes> newDishesCommand = std::make_shared<PrepareDishes>(newDish);
