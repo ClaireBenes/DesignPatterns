@@ -22,7 +22,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{2c8a3e26-4bb8-4ffc-8007-7ae4cca07101}</ProjectGuid>
-    <RootNamespace>InventoryRPG</RootNamespace>
+    <RootNamespace>DesignPatterns</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>DesignPatterns</ProjectName>
   </PropertyGroup>
