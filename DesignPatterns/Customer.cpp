@@ -4,6 +4,10 @@
 
 void Customer::Init()
 {
+	//Choose new random image
+	float randomImages = rand() % customerData->allCustomerImages.size();
+	customerImage = customerData->allCustomerImages[randomImages];
+
 	posX = GetScreenWidth();
 	posY = 250;
 }
@@ -24,10 +28,15 @@ void Customer::Update()
 
 void Customer::Draw()
 {
-	DrawTextureEx(customerData->customerImages, { posX,posY }, 0, customerData->size, WHITE);
+	DrawTextureEx(customerImage, { posX,posY }, 0, customerData->size, WHITE);
 }
 
 void Customer::ChangeCustomerData(std::shared_ptr<CustomerData> newData)
 {
 	customerData = newData;
+}
+
+float Customer::GetTextureWidth()
+{
+	return customerImage.width;
 }

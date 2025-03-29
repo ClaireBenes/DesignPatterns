@@ -104,7 +104,7 @@ void GameManager::NewCustomer()
 	//Create new customer
 	auto customer = std::make_shared<Customer>();
 	//Update his go to pos
-	customer->waitingPos += waitingCustomerData->customerImages.width * 3 * allCustomers.size();
+	customer->waitingPos += customer->GetTextureWidth() * 3 * allCustomers.size();
 	//Change its data
 	customer->ChangeCustomerData(waitingCustomerData);
 
@@ -174,6 +174,6 @@ void GameManager::OnNotify()
 	//Move all other customers still waiting to the next available spot
 	for(int i = 0; i < allCustomers.size(); i++)
 	{
-		allCustomers[i]->waitingPos = 200 + allCustomers[i]->customerData->customerImages.width * 3 * i;
+		allCustomers[i]->waitingPos = 200 + allCustomers[i]->GetTextureWidth() * 3 * i;
 	}
 }
