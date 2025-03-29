@@ -14,7 +14,7 @@ void Dish::Init()
 	//Choose new random image
 	float randomImages = rand() % dishData->allFoodImages.size();
 	foodImage = dishData->allFoodImages[randomImages];
-	posY = 50;
+	posY = 370;
 }
 
 void Dish::Update()

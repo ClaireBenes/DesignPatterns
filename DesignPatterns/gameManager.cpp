@@ -9,6 +9,9 @@
 
 void GameManager::Init()
 {
+	background = LoadTexture("ressource/interior.png");
+	background.width = GetScreenWidth();
+	background.height = GetScreenHeight();
 	//Initialize dish array to nullptr for every index
 	allDishes.fill(nullptr);
 
@@ -82,6 +85,8 @@ void GameManager::Update()
 
 void GameManager::Draw()
 {
+	DrawTextureEx(background, { 0, 0 }, 0, 1, WHITE);
+
 	//Draw all object
 	for(auto& object : allObjects)
 	{
@@ -89,7 +94,7 @@ void GameManager::Draw()
 	}
 
 	//objects count
-	DrawText(TextFormat("GameObjects : %i", allObjects.size()), 20, 20, 20, RED);
+	//DrawText(TextFormat("GameObjects : %i", allObjects.size()), 20, 20, 20, RED);
 }
 
 void GameManager::Unload()
@@ -104,7 +109,7 @@ void GameManager::NewCustomer()
 	//Create new customer
 	auto customer = std::make_shared<Customer>();
 	//Update his go to pos
-	customer->waitingPos += customer->GetTextureWidth() * 3 * allCustomers.size();
+	customer->waitingPos += customer->GetTextureWidth() * gapBetweenTexture * allCustomers.size();
 	//Change its data
 	customer->ChangeCustomerData(waitingCustomerData);
 
@@ -130,7 +135,7 @@ void GameManager::NewDish()
 		if (dish == nullptr)
 		{
 			dish = newDish;
-			newDish->posX = 200 + dish->GetFoodImage().width * dish->dishData->size * i;
+			newDish->posX = 470 + dish->GetFoodImage().width * dish->dishData->size * i;
 			break;
 		}
 	}
@@ -165,7 +170,7 @@ void GameManager::OnNotify()
 
 	//When dish is finished -> Customer will move away, walk faster
 	allCustomers[0]->willBeDestroyed = true;
-	allCustomers[0]->waitingPos = -200;
+	allCustomers[0]->waitingPos = -allCustomers[0]->toGoPos;
 	allCustomers[0]->ChangeCustomerData(runningCustomerData);
 
 	//Erase first element of customers
@@ -174,6 +179,6 @@ void GameManager::OnNotify()
 	//Move all other customers still waiting to the next available spot
 	for(int i = 0; i < allCustomers.size(); i++)
 	{
-		allCustomers[i]->waitingPos = 200 + allCustomers[i]->GetTextureWidth() * 3 * i;
+		allCustomers[i]->waitingPos = allCustomers[i]->toGoPos + allCustomers[i]->GetTextureWidth() * gapBetweenTexture * i;
 	}
 }

@@ -19,7 +19,8 @@ public:
 
 	std::shared_ptr<CustomerData> customerData;
 
-	float waitingPos = 200;
+	const float toGoPos = 200;
+	float waitingPos = toGoPos;
 	bool willBeDestroyed = false;
 
 private:

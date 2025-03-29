@@ -9,7 +9,7 @@ void Customer::Init()
 	customerImage = customerData->allCustomerImages[randomImages];
 
 	posX = GetScreenWidth();
-	posY = 250;
+	posY = 430;
 }
 
 void Customer::Update()

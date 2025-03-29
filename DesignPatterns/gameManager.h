@@ -29,6 +29,7 @@ public :
 	std::array<std::shared_ptr<Dish>, 15> allDishes {};
 
 private:
+	const float gapBetweenTexture = 4;
 
 	const int minTimeToPrepare = 1;
 	const int maxTimeToPrepare = 6;
@@ -53,5 +54,7 @@ private:
 	std::vector<std::shared_ptr<GameObject>> objectsToRemove;
 
 	std::shared_ptr<CommandScheduler> commandScheduler;
+
+	Texture2D background;
 };
 

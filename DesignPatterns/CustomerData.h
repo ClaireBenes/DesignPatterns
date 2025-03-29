@@ -26,6 +26,6 @@ struct CustomerData
 	};
 
 	float speed = 100;
-	float size = 5;
+	float size = 7;
 };
 
